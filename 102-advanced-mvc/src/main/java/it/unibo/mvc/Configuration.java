@@ -1,5 +1,8 @@
 package it.unibo.mvc;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.HashSet;
 
 /**
  * Encapsulates the concept of configuration.
@@ -63,13 +66,15 @@ public final class Configuration {
      */
     public static class Builder {
 
-        private static final int MIN = 0;
-        private static final int MAX = 100;
-        private static final int ATTEMPTS = 10;
+        /*private static int MIN = 0;
+        private static int MAX = 100;
+        private static int ATTEMPTS = 10;*/
 
-        private int min = MIN;
-        private int max = MAX;
-        private int attempts = ATTEMPTS;
+        final private String SETTING_PATH = "src/main/resources/config.yml";
+
+        private int min;
+        private int max;
+        private int attempts;
         private boolean consumed = false;
 
         /**
@@ -109,6 +114,12 @@ public final class Configuration {
             consumed = true;
             return new Configuration(max, min, attempts);
         }
+
+        private HashSet getSettings() {
+            HashSet settings = new HashSet<>();
+            FileReader fileReader = new FileReader(SETTING_PATH);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            return settings;
+        }
     }
 }
-
